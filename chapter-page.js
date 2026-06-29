@@ -117,7 +117,13 @@ const accessibleLessons = {
     ],
     pictureTitle: 'Picture explanation',
     picture: ['The person icon means your identity.', 'The lock means MFA protecting the login.', 'The large box means all the services that become safer when the account is protected.'],
-    keyTerms: ['Password manager', 'MFA', 'Recovery codes', 'Phishing']
+    keyTerms: ['Password manager', 'MFA', 'Recovery codes', 'Phishing'],
+    hotspots: [
+      {x: 35, y: 48, label: 'Identity', text: 'This is you. Account security protects your identity before someone else can pretend to be you.'},
+      {x: 68, y: 42, label: 'MFA lock', text: 'The lock represents multi-factor authentication: a second proof after the password.'},
+      {x: 50, y: 78, label: 'Recovery', text: 'Recovery codes help you get back in safely if your phone or MFA device is lost.'}
+    ],
+    example: 'Real-world example: protect your email first. If attackers control your email, they can reset many other passwords.'
   },
   data: {
     readingTitle: 'Text lesson: data security',
@@ -129,7 +135,13 @@ const accessibleLessons = {
     ],
     pictureTitle: 'Picture explanation',
     picture: ['The vault means sensitive data needs protection.', 'The clock-like center means checking whether data stayed the same over time.', 'The side lines mean copies and backups.'],
-    keyTerms: ['Encryption', 'Hashing', 'Backup', 'Sensitive data']
+    keyTerms: ['Encryption', 'Hashing', 'Backup', 'Sensitive data'],
+    hotspots: [
+      {x: 50, y: 48, label: 'Vault', text: 'The vault shows confidentiality: private data should be readable only by the right people.'},
+      {x: 50, y: 62, label: 'Hash', text: 'The center mark stands for integrity checks. A hash changes when the file changes.'},
+      {x: 76, y: 71, label: 'Backup', text: 'The side copies remind you that important data needs recovery, not just secrecy.'}
+    ],
+    example: 'Real-world example: a photo backup protects memories; encryption protects the backup if the account or drive is exposed.'
   },
   systems: {
     readingTitle: 'Text lesson: system security',
@@ -141,7 +153,13 @@ const accessibleLessons = {
     ],
     pictureTitle: 'Picture explanation',
     picture: ['The screen is the system being monitored.', 'The heartbeat line represents logs and activity.', 'The browser dots remind you that systems have many moving parts.'],
-    keyTerms: ['Patching', 'Least privilege', 'Logs', 'Backup recovery']
+    keyTerms: ['Patching', 'Least privilege', 'Logs', 'Backup recovery'],
+    hotspots: [
+      {x: 24, y: 30, label: 'Updates', text: 'The window controls represent software components that need updates and secure configuration.'},
+      {x: 50, y: 65, label: 'Activity', text: 'The heartbeat line is system activity. Defenders watch for strange spikes and patterns.'},
+      {x: 74, y: 63, label: 'Logs', text: 'Logs are evidence. They help you reconstruct what happened after a suspicious event.'}
+    ],
+    example: 'Real-world example: repeated failed logins followed by one success is a signal worth investigating.'
   },
   software: {
     readingTitle: 'Text lesson: software security',
@@ -153,7 +171,13 @@ const accessibleLessons = {
     ],
     pictureTitle: 'Picture explanation',
     picture: ['The code window represents an application.', 'The angle brackets mean code and user input.', 'The horizontal lines mean rules that check and organize the app behavior.'],
-    keyTerms: ['Input validation', 'SQL injection', 'Parameterized queries', 'Dependencies']
+    keyTerms: ['Input validation', 'SQL injection', 'Parameterized queries', 'Dependencies'],
+    hotspots: [
+      {x: 32, y: 53, label: 'Input', text: 'Input is anything a user sends. Secure software treats input as untrusted until checked.'},
+      {x: 69, y: 53, label: 'Rules', text: 'Validation rules decide what is allowed before data reaches sensitive code.'},
+      {x: 50, y: 72, label: 'Patch', text: 'Dependencies and libraries need updates because old bugs become public attack paths.'}
+    ],
+    example: "Real-world example: a username like maya' OR '1'='1 should be treated as suspicious input, not normal text."
   },
   privacy: {
     readingTitle: 'Text lesson: privacy',
@@ -165,7 +189,13 @@ const accessibleLessons = {
     ],
     pictureTitle: 'Picture explanation',
     picture: ['The shield means protecting personal information.', 'The circle means your private identity.', 'The cross line means limiting unnecessary access.'],
-    keyTerms: ['Permissions', 'Data minimization', 'Metadata', 'Tracking']
+    keyTerms: ['Permissions', 'Data minimization', 'Metadata', 'Tracking'],
+    hotspots: [
+      {x: 50, y: 30, label: 'Shield', text: 'The shield means privacy settings and careful sharing protect personal information.'},
+      {x: 50, y: 55, label: 'You', text: 'The circle is your identity. Privacy is about control over information connected to you.'},
+      {x: 50, y: 77, label: 'Limit', text: 'The line means limit access: deny permissions that do not match the app purpose.'}
+    ],
+    example: 'Real-world example: a flashlight app probably does not need your contacts or precise location.'
   },
   project: {
     readingTitle: 'Text lesson: final project',
@@ -177,7 +207,13 @@ const accessibleLessons = {
     ],
     pictureTitle: 'Picture explanation',
     picture: ['The checklist means turning learning into proof.', 'The check marks mean completed safe tasks.', 'The side lines mean your written evidence and recommendations.'],
-    keyTerms: ['Risk', 'Evidence', 'Fix', 'Report']
+    keyTerms: ['Risk', 'Evidence', 'Fix', 'Report'],
+    hotspots: [
+      {x: 33, y: 42, label: 'Evidence', text: 'Every project should show what you observed, not just what you guessed.'},
+      {x: 56, y: 54, label: 'Fix', text: 'A good recommendation should be practical, safe, and clear enough for someone to follow.'},
+      {x: 70, y: 72, label: 'Report', text: 'The report turns your work into a portfolio artifact others can understand.'}
+    ],
+    example: 'Real-world example: write a one-page account security audit with risks, evidence, and recommended fixes.'
   }
 };
 
@@ -185,6 +221,7 @@ const id = document.body.dataset.chapter;
 const lesson = lessonData[id] || lessonData.accounts;
 const accessible = accessibleLessons[id] || accessibleLessons.accounts;
 document.title = `${lesson.title} — CyberStart Academy`;
+const hotspotButtons = accessible.hotspots.map((spot, index) => `<button class="hotspot hotspot-${index + 1}" data-hotspot="${index}" style="left:${spot.x}%;top:${spot.y}%"><span>${index + 1}</span><b>${spot.label}</b></button>`).join('');
 
 document.querySelector('#lessonApp').innerHTML = `
   <header class="lesson-topbar">
@@ -202,13 +239,20 @@ document.querySelector('#lessonApp').innerHTML = `
         <a class="text-link" href="#practice">Try quick check <span>↓</span></a>
       </div>
     </div>
-    <div class="lesson-picture">${iconSvg[lesson.picture]}</div>
+    <div class="lesson-picture interactive-picture">
+      ${iconSvg[lesson.picture]}
+      <div class="scan-beam"></div>
+      ${hotspotButtons}
+      <p class="hotspot-readout">Tap a glowing point to learn what this picture means.</p>
+    </div>
   </section>
   <section class="visual-classroom">
     <article class="picture-card">
       <span class="kicker">BIG IDEA</span>
       <h2>What this chapter means</h2>
       <p>${lesson.bigIdea}</p>
+      <button class="reveal-example" type="button">Show real-world example <span>+</span></button>
+      <p class="example-note" hidden>${accessible.example}</p>
     </article>
     <article class="code-lesson">
       <div class="code-title"><span></span><span></span><span></span><b>defender-notes.js</b></div>
@@ -231,7 +275,10 @@ document.querySelector('#lessonApp').innerHTML = `
     </div>
     <div class="study-panel" data-study-panel="picture">
       <div class="picture-explain">
-        <div class="lesson-picture small-picture">${iconSvg[lesson.picture]}</div>
+        <div class="lesson-picture small-picture interactive-picture">
+          ${iconSvg[lesson.picture]}
+          ${hotspotButtons}
+        </div>
         <div>
           <h3>${accessible.pictureTitle}</h3>
           <ul>${accessible.picture.map(item => `<li>${item}</li>`).join('')}</ul>
@@ -292,4 +339,24 @@ document.querySelector('.study-tabs').addEventListener('click', event => {
   document.querySelectorAll('[data-study-panel]').forEach(panel => {
     panel.classList.toggle('active', panel.dataset.studyPanel === selected);
   });
+});
+
+document.querySelectorAll('.interactive-picture').forEach(stage => {
+  stage.addEventListener('click', event => {
+    const button = event.target.closest('[data-hotspot]');
+    if (!button) return;
+    const spot = accessible.hotspots[Number(button.dataset.hotspot)];
+    stage.querySelectorAll('[data-hotspot]').forEach(item => item.classList.remove('active'));
+    button.classList.add('active');
+    const readout = stage.querySelector('.hotspot-readout');
+    if (readout) readout.textContent = `${spot.label}: ${spot.text}`;
+  });
+});
+
+document.querySelector('.reveal-example').addEventListener('click', event => {
+  const note = document.querySelector('.example-note');
+  const open = note.hasAttribute('hidden');
+  note.toggleAttribute('hidden', !open);
+  event.currentTarget.querySelector('span').textContent = open ? '−' : '+';
+  event.currentTarget.classList.toggle('active', open);
 });
