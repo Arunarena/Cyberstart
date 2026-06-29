@@ -106,8 +106,84 @@ const iconSvg = {
   project: `<svg viewBox="0 0 260 180" role="img" aria-label="Project checklist diagram"><rect x="52" y="28" width="156" height="130" rx="14"/><path d="M82 70l12 12 25-28M82 111l12 12 25-28M138 76h42M138 117h42"/></svg>`
 };
 
+const accessibleLessons = {
+  accounts: {
+    readingTitle: 'Text lesson: account security',
+    reading: [
+      'Think of an online account as the front door to your digital life. If someone gets into your email, they can often reset passwords for many other services. That is why email, banking, school, and cloud accounts should be protected first.',
+      'A strong password should be long, unique, and not reused. Reusing the same password is risky because one leaked website can put many accounts in danger. A password manager helps because it can create and remember different passwords for every account.',
+      'Multi-factor authentication, or MFA, adds another proof after the password. Even if a password is stolen, the attacker may still be blocked because they do not have the second factor.',
+      'Phishing is when someone tricks you into giving access away. The safe habit is simple: do not follow urgent login links from messages. Open the official app or type the website address yourself.'
+    ],
+    pictureTitle: 'Picture explanation',
+    picture: ['The person icon means your identity.', 'The lock means MFA protecting the login.', 'The large box means all the services that become safer when the account is protected.'],
+    keyTerms: ['Password manager', 'MFA', 'Recovery codes', 'Phishing']
+  },
+  data: {
+    readingTitle: 'Text lesson: data security',
+    reading: [
+      'Data is anything a system stores or sends: names, photos, messages, files, passwords, logs, and settings. Security asks three questions: should this be secret, should this stay unchanged, and should this remain available?',
+      'Encryption helps keep data secret. It turns readable information into protected information that needs the right key to read.',
+      'Hashing helps check whether data changed. A hash is like a fingerprint for a file or message. If the data changes, the fingerprint changes too.',
+      'Backups protect availability. If a device breaks, malware deletes files, or a mistake happens, a backup can help you recover.'
+    ],
+    pictureTitle: 'Picture explanation',
+    picture: ['The vault means sensitive data needs protection.', 'The clock-like center means checking whether data stayed the same over time.', 'The side lines mean copies and backups.'],
+    keyTerms: ['Encryption', 'Hashing', 'Backup', 'Sensitive data']
+  },
+  systems: {
+    readingTitle: 'Text lesson: system security',
+    reading: [
+      'A system can be a laptop, phone, server, router, or cloud machine. Defending systems means keeping them updated, reducing risky permissions, watching for strange behavior, and being ready to recover.',
+      'Updates matter because attackers often use known bugs. When software is patched, many easy attack paths disappear.',
+      'Least privilege means users and apps should only get the access they need. If something goes wrong, limited access limits the damage.',
+      'Logs are records of what happened. A defender reads logs to find patterns, such as repeated failed logins followed by a success.'
+    ],
+    pictureTitle: 'Picture explanation',
+    picture: ['The screen is the system being monitored.', 'The heartbeat line represents logs and activity.', 'The browser dots remind you that systems have many moving parts.'],
+    keyTerms: ['Patching', 'Least privilege', 'Logs', 'Backup recovery']
+  },
+  software: {
+    readingTitle: 'Text lesson: software security',
+    reading: [
+      'Software security is about writing and configuring apps so mistakes do not become dangerous. A safe app assumes user input can be messy, unexpected, or hostile.',
+      'Input validation means checking that data matches what the app expects. For example, a username field should not accept database commands.',
+      'Parameterized queries help stop SQL injection because the database treats user input as data, not as part of the command.',
+      'Secure software also depends on updates. Old libraries can contain known vulnerabilities, so developers must patch dependencies.'
+    ],
+    pictureTitle: 'Picture explanation',
+    picture: ['The code window represents an application.', 'The angle brackets mean code and user input.', 'The horizontal lines mean rules that check and organize the app behavior.'],
+    keyTerms: ['Input validation', 'SQL injection', 'Parameterized queries', 'Dependencies']
+  },
+  privacy: {
+    readingTitle: 'Text lesson: privacy',
+    reading: [
+      'Privacy is about control over personal information. It is not only about secrets; it is about deciding what is collected, why it is collected, and who can use it.',
+      'Apps often request permissions such as location, contacts, camera, and notifications. A defender asks whether the permission matches the app purpose.',
+      'Data minimization means collecting and sharing less. If an app does not need a piece of information, it should not ask for it.',
+      'Metadata can reveal context even when the main content seems harmless. A photo, message, or file can include time, location, device, or author details.'
+    ],
+    pictureTitle: 'Picture explanation',
+    picture: ['The shield means protecting personal information.', 'The circle means your private identity.', 'The cross line means limiting unnecessary access.'],
+    keyTerms: ['Permissions', 'Data minimization', 'Metadata', 'Tracking']
+  },
+  project: {
+    readingTitle: 'Text lesson: final project',
+    reading: [
+      'A beginner cybersecurity project should show how you think. You do not need to hack anything. You need to observe a safe example, identify risks, explain evidence, and recommend fixes.',
+      'A good report has four parts: the asset, the risk, the evidence, and the fix. This structure helps other people understand why the issue matters.',
+      'Your project can be a personal security checklist, a phishing-analysis report, a password audit, a privacy settings review, or a small secure-coding demo.',
+      'The best portfolio work is honest and legal. Use screenshots, notes, and sample data from systems you own or labs designed for practice.'
+    ],
+    pictureTitle: 'Picture explanation',
+    picture: ['The checklist means turning learning into proof.', 'The check marks mean completed safe tasks.', 'The side lines mean your written evidence and recommendations.'],
+    keyTerms: ['Risk', 'Evidence', 'Fix', 'Report']
+  }
+};
+
 const id = document.body.dataset.chapter;
 const lesson = lessonData[id] || lessonData.accounts;
+const accessible = accessibleLessons[id] || accessibleLessons.accounts;
 document.title = `${lesson.title} — CyberStart Academy`;
 
 document.querySelector('#lessonApp').innerHTML = `
@@ -122,6 +198,7 @@ document.querySelector('#lessonApp').innerHTML = `
       <p>${lesson.subtitle}</p>
       <div class="hero-actions">
         <a class="button" href="#watch">Watch video <span>↓</span></a>
+        <a class="button read-link" href="#read">Read instead <span>↓</span></a>
         <a class="text-link" href="#practice">Try quick check <span>↓</span></a>
       </div>
     </div>
@@ -137,6 +214,35 @@ document.querySelector('#lessonApp').innerHTML = `
       <div class="code-title"><span></span><span></span><span></span><b>defender-notes.js</b></div>
       <pre>${lesson.code.map((line, index) => `<code><em>${String(index + 1).padStart(2, '0')}</em>${line}</code>`).join('\n')}</pre>
     </article>
+  </section>
+  <section class="accessible-study" id="read">
+    <div class="section-heading">
+      <div><span class="kicker">CAN'T WATCH?</span><h2>Read the chapter instead.</h2></div>
+      <p>This is an original text summary of the video idea, with picture notes for visual learners. It is not a word-for-word transcript.</p>
+    </div>
+    <div class="study-tabs" role="tablist" aria-label="Accessible lesson options">
+      <button class="active" data-study-tab="text" role="tab" aria-selected="true">Text notes</button>
+      <button data-study-tab="picture" role="tab" aria-selected="false">Picture explanation</button>
+      <button data-study-tab="terms" role="tab" aria-selected="false">Key terms</button>
+    </div>
+    <div class="study-panel active" data-study-panel="text">
+      <h3>${accessible.readingTitle}</h3>
+      ${accessible.reading.map(paragraph => `<p>${paragraph}</p>`).join('')}
+    </div>
+    <div class="study-panel" data-study-panel="picture">
+      <div class="picture-explain">
+        <div class="lesson-picture small-picture">${iconSvg[lesson.picture]}</div>
+        <div>
+          <h3>${accessible.pictureTitle}</h3>
+          <ul>${accessible.picture.map(item => `<li>${item}</li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>
+    <div class="study-panel" data-study-panel="terms">
+      <h3>Words to remember</h3>
+      <div class="term-cloud">${accessible.keyTerms.map(term => `<span>${term}</span>`).join('')}</div>
+      <p class="term-note">Tip: read these out loud, then explain each one in your own words. If you can explain it simply, you are learning it.</p>
+    </div>
   </section>
   <section class="lesson-grid">
     <article>
@@ -172,4 +278,18 @@ document.querySelector('.choice-grid').addEventListener('click', event => {
   document.querySelector('#lessonFeedback').innerHTML = correct
     ? `<strong>Nice.</strong> ${lesson.quiz.explain}`
     : `<strong>Try again.</strong> Re-read the code notes above, then choose the safest defender action.`;
+});
+
+document.querySelector('.study-tabs').addEventListener('click', event => {
+  const button = event.target.closest('[data-study-tab]');
+  if (!button) return;
+  const selected = button.dataset.studyTab;
+  document.querySelectorAll('[data-study-tab]').forEach(item => {
+    const active = item === button;
+    item.classList.toggle('active', active);
+    item.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+  document.querySelectorAll('[data-study-panel]').forEach(panel => {
+    panel.classList.toggle('active', panel.dataset.studyPanel === selected);
+  });
 });
