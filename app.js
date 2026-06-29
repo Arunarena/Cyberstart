@@ -3,6 +3,7 @@ const chapters = [
     icon: '01',
     tag: 'VIDEO CHAPTER 01 · SECURING ACCOUNTS',
     title: 'Securing Accounts',
+    page: 'accounts.html',
     desc: 'Learn login basics, passwords, password managers, MFA, phishing, and account recovery.',
     learn: 'Most attacks begin with accounts. Your goal is to make stolen or guessed passwords less useful by using unique passwords, MFA, recovery codes, and careful verification.',
     doNow: ['Watch the Securing Accounts video.', 'Pick one important account such as email or banking.', 'Turn on MFA and save recovery codes somewhere safe.'],
@@ -12,6 +13,7 @@ const chapters = [
     icon: '02',
     tag: 'VIDEO CHAPTER 02 · SECURING DATA',
     title: 'Securing Data',
+    page: 'data.html',
     desc: 'Understand encryption, hashing, deletion, backups, metadata, and data exposure.',
     learn: 'Data security is about protecting information at rest, in transit, and in use. Encryption protects confidentiality, hashing checks integrity, and backups protect availability.',
     doNow: ['Watch the Securing Data video.', 'Identify one file you would hate to lose.', 'Make sure it is backed up and protected.'],
@@ -21,6 +23,7 @@ const chapters = [
     icon: '03',
     tag: 'VIDEO CHAPTER 03 · SECURING SYSTEMS',
     title: 'Securing Systems',
+    page: 'systems.html',
     desc: 'Learn updates, malware, permissions, devices, networks, logs, and incident signs.',
     learn: 'Systems become safer through layers: updates, least privilege, secure configuration, monitoring, and fast response when something looks wrong.',
     doNow: ['Watch the Securing Systems video.', 'Check if automatic updates are enabled.', 'Review one suspicious login pattern in the lab.'],
@@ -30,6 +33,7 @@ const chapters = [
     icon: '04',
     tag: 'VIDEO CHAPTER 04 · SECURING SOFTWARE',
     title: 'Securing Software',
+    page: 'software.html',
     desc: 'Learn bugs, input validation, SQL injection ideas, web security headers, and safe coding habits.',
     learn: 'Software security starts with assuming input can be hostile. Defenders validate input, limit permissions, escape output, patch dependencies, and log important events.',
     doNow: ['Watch the Securing Software video.', 'Learn what input validation means.', 'Test the safe validation lab.'],
@@ -39,6 +43,7 @@ const chapters = [
     icon: '05',
     tag: 'VIDEO CHAPTER 05 · PRESERVING PRIVACY',
     title: 'Preserving Privacy',
+    page: 'privacy.html',
     desc: 'Learn tracking, metadata, permissions, data minimization, privacy settings, and tradeoffs.',
     learn: 'Privacy is about control over personal information. Good privacy practice reduces unnecessary collection, limits permissions, and makes sharing intentional.',
     doNow: ['Watch the Preserving Privacy video.', 'Audit one app permission on your device.', 'Remove one permission that is not needed.'],
@@ -48,6 +53,7 @@ const chapters = [
     icon: '06',
     tag: 'FINAL CHAPTER · BUILD YOUR PROJECT',
     title: 'Final Defender Project',
+    page: 'project.html',
     desc: 'Turn the video lessons into a personal security plan and portfolio project.',
     learn: 'Your first cybersecurity project should prove you can think like a defender: identify risks, explain evidence, recommend fixes, and write clearly.',
     doNow: ['Create a one-page personal security checklist.', 'Repeat all five labs.', 'Write a short report: risk, evidence, fix, and what you learned.'],
@@ -178,7 +184,10 @@ function renderChapters(){
       <small>${chapter.tag}</small>
       <h3>${chapter.title}</h3>
       <p>${chapter.desc}</p>
-      <button data-chapter="${index}">${completed.includes(index) ? 'Review chapter' : 'Open chapter'} <span>→</span></button>
+      <div class="chapter-actions">
+        <a href="pages/${chapter.page}">Open visual lesson <span>→</span></a>
+        <button data-chapter="${index}">${completed.includes(index) ? 'Review notes' : 'Quick notes'}</button>
+      </div>
     </article>
   `).join('');
   document.querySelector('#progressLabel').textContent = `${completed.length} of ${chapters.length} complete`;
